@@ -3,57 +3,51 @@ package sysinit
 import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	"log"
+	_ "github.com/go-sql-driver/mysql"
 )
 
-//dbinit("w") 初始化主库
+//调用方式
 func dbinit(aliases ...string) {
-	//如果是主库，自动建表
-	isDev := ("dev" == beego.AppConfig.String("runmode"))
+	//如果是开发模式，则显示命令信息
+	isDev := (beego.AppConfig.String("runmode") == "dev")
 	if len(aliases) > 0 {
-		for _, aliaas := range aliases {
-			if "w" == aliaas {
-				if err := orm.RunSyncdb("default", false, true); err != nil {
-					log.Fatalf("自动建表:%s", err)
-				}
+		for _, alias := range aliases {
+			registDatabase(alias)
+			//主库 自动建表
+			if "w" == alias {
+				orm.RunSyncdb("default", false, isDev)
 			}
 		}
 	} else {
-		registerDatabases("w")
-		//自动建表
-		if err := orm.RunSyncdb("default", false, true); err != nil {
-			log.Fatalf("自动建表:%s", err)
-		}
+		registDatabase("w")
+		orm.RunSyncdb("default", false, isDev)
 	}
+
 	if isDev {
 		orm.Debug = isDev
 	}
 }
 
-//注册单数据库
-func registerDatabases(alias string) {
-	if len(alias) <= 0 {
+func registDatabase(alias string) {
+	if len(alias) == 0 {
 		return
 	}
 	//连接名称
-	dbAlias := alias //default
-	if "w" == alias || "default" == alias || len(alias) <= 0 {
+	dbAlias := alias
+	if "w" == alias || "default" == alias {
 		dbAlias = "default"
 		alias = "w"
 	}
 	//数据库名称
 	dbName := beego.AppConfig.String("db_" + alias + "_database")
-	//数据库用户名
-	dbuser := beego.AppConfig.String("db_" + alias + "_username")
-	//数据库密码
-	dbpwd := beego.AppConfig.String("db_" + alias + "_password")
-	//数据库端IP
-	dbhost := beego.AppConfig.String("db_" + alias + "_host")
-	//数据库端口号
-	dbport := beego.AppConfig.String("db_" + alias + "_port")
-	//root:123456@tcp(127.0.0.1:3306)/book?charset=utf8
+	//数据库连接用户名
+	dbUser := beego.AppConfig.String("db_" + alias + "_username")
+	//数据库连接用户名
+	dbPwd := beego.AppConfig.String("db_" + alias + "_password")
+	//数据库IP（域名）
+	dbHost := beego.AppConfig.String("db_" + alias + "_host")
+	//数据库端口
+	dbPort := beego.AppConfig.String("db_" + alias + "_port")
 	//连接数据库
-	if err := orm.RegisterDataBase(dbAlias, "mysql", dbuser+":"+dbpwd+"@tcp("+dbhost+":"+dbport+")"+dbName+"?charset=utf8", 30); err != nil {
-		log.Fatalf("连接数据库失败:%s", err)
-	}
+	orm.RegisterDataBase(dbAlias, "mysql", dbUser+":"+dbPwd+"@tcp("+dbHost+":"+dbPort+")/"+dbName+"?charset=utf8", 30)
 }
