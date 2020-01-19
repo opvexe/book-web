@@ -110,7 +110,7 @@
      "[meta $vpi_printf]"
   );
 
-  MT("line_comment", "[comment // Hello world]");
+  MT("line_comment", "[common // Hello world]");
 
   // Alignment tests
   MT("align_port_map_style1",

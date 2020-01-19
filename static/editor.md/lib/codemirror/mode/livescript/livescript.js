@@ -84,7 +84,7 @@
   var Rules = {
     start: [
       {
-        token: 'comment.doc',
+        token: 'common.doc',
         regex: '/\\*',
         next: 'comment'
       }, {
@@ -187,7 +187,7 @@
         token: 'string.regex',
         regex: '\\s*#{'
       }, {
-        token: 'comment.regex',
+        token: 'common.regex',
         regex: '\\s+(?:#.*)?'
       }, {
         token: 'string.regex',
@@ -210,11 +210,11 @@
     ],
     comment: [
       {
-        token: 'comment.doc',
+        token: 'common.doc',
         regex: '.*?\\*/',
         next: 'start'
       }, {
-        token: 'comment.doc',
+        token: 'common.doc',
         regex: '.+'
       }
     ],

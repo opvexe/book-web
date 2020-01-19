@@ -168,7 +168,7 @@ function(hljs) {
                 illegal: BAD_CHARS
             },
 
-            // see comment above the definition
+            // see common above the definition
             VAR_DECLS,
 
             // no markup

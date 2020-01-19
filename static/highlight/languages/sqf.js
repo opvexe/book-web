@@ -92,7 +92,7 @@ function(hljs) {
         'collapseObjectTree combatMode commandArtilleryFire commandChat ' +
         'commander commandFire commandFollow commandFSM commandGetOut ' +
         'commandingMenu commandMove commandRadio commandStop commandTarget ' +
-        'commandWatch comment commitOverlay compile compileFinal ' +
+        'commandWatch common commitOverlay compile compileFinal ' +
         'completedFSM composeText configClasses configFile configHierarchy ' +
         'configName configProperties configSourceMod configSourceModList ' +
         'connectTerminalToUAV controlNull controlsGroupCtrl ' +

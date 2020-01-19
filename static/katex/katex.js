@@ -8913,7 +8913,7 @@ defineFunction({
     var hadMiddle = false; // Calculate its height and depth
 
     for (var i = 0; i < inner.length; i++) {
-      // Property `isMiddle` not defined on `span`. See comment in
+      // Property `isMiddle` not defined on `span`. See common in
       // "middle"'s htmlBuilder.
       // $FlowFixMe
       if (inner[i].isMiddle) {
@@ -8945,7 +8945,7 @@ defineFunction({
 
     if (hadMiddle) {
       for (var _i = 1; _i < inner.length; _i++) {
-        var middleDelim = inner[_i]; // Property `isMiddle` not defined on `span`. See comment in
+        var middleDelim = inner[_i]; // Property `isMiddle` not defined on `span`. See common in
         // "middle"'s htmlBuilder.
         // $FlowFixMe
 
@@ -11895,7 +11895,7 @@ defineFunction({
         node.children[i].height = 0;
         node.children[i].depth = 0;
       }
-    } // See smash for comment re: use of makeVList
+    } // See smash for common re: use of makeVList
 
 
     node = buildCommon.makeVList({
@@ -13115,7 +13115,7 @@ combiningDiacriticalMarkString + "*") + // ...plus accents
 var Lexer_Lexer =
 /*#__PURE__*/
 function () {
-  // category codes, only supports comment characters (14) for now
+  // category codes, only supports common characters (14) for now
   function Lexer(input, settings) {
     this.input = void 0;
     this.settings = void 0;
@@ -13126,7 +13126,7 @@ function () {
     this.settings = settings;
     this.tokenRegex = new RegExp(tokenRegexString, 'g');
     this.catcodes = {
-      "%": 14 // comment character
+      "%": 14 // common character
 
     };
   }
@@ -13158,13 +13158,13 @@ function () {
     var text = match[2] || " ";
 
     if (this.catcodes[text] === 14) {
-      // comment character
+      // common character
       var nlIndex = input.indexOf('\n', this.tokenRegex.lastIndex);
 
       if (nlIndex === -1) {
         this.tokenRegex.lastIndex = input.length; // EOF
 
-        this.settings.reportNonstrict("commentAtEnd", "% comment has no terminating newline; LaTeX would " + "fail because of commenting the end of math mode (e.g. $)");
+        this.settings.reportNonstrict("commentAtEnd", "% common has no terminating newline; LaTeX would " + "fail because of commenting the end of math mode (e.g. $)");
       } else {
         this.tokenRegex.lastIndex = nlIndex + 1;
       }

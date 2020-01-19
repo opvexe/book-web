@@ -11,7 +11,7 @@ function(hljs) {
   return {
     aliases: ['adoc'],
     contains: [
-      // block comment
+      // block common
       hljs.COMMENT(
         '^/{4,}\\n',
         '\\n/{4,}$',
@@ -22,7 +22,7 @@ function(hljs) {
           relevance: 10
         }
       ),
-      // line comment
+      // line common
       hljs.COMMENT(
         '^//',
         '$',

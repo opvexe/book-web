@@ -370,21 +370,21 @@
    */
 
   MT('html',
-      '[comment <div id="wrapper">]',
-      '[comment <section id="introduction">]',
+      '[common <div id="wrapper">]',
+      '[common <section id="introduction">]',
       '',
       '[header&header-1 h1. Welcome]',
       '',
       '[variable-2 * Item one]',
       '[variable-2 * Item two]',
       '',
-      '[comment <a href="http://example.com">Example</a>]',
+      '[common <a href="http://example.com">Example</a>]',
       '',
-      '[comment </section>]',
-      '[comment </div>]');
+      '[common </section>]',
+      '[common </div>]');
 
   MT('inlineHtml',
-      'I can use HTML directly in my [comment <span class="youbetcha">Textile</span>].');
+      'I can use HTML directly in my [common <span class="youbetcha">Textile</span>].');
 
   /*
    * No-Textile

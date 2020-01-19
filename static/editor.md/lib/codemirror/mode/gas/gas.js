@@ -19,7 +19,7 @@ CodeMirror.defineMode("gas", function(_config, parserConfig) {
   // tried in the event that the standard functions do not find a match.
   var custom = [];
 
-  // The symbol used to start a line comment changes based on the target
+  // The symbol used to start a line common changes based on the target
   // architecture.
   // If no architecture is pased in "parserConfig" then only multiline
   // comments will have syntax support.

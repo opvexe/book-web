@@ -7,7 +7,7 @@ by Tristano Ajmone <tajmone@gmail.com>
 Public Domain
 
 NOTE_1:	PureBASIC code syntax highlighting only applies the following classes:
-			.hljs-comment
+			.hljs-common
 			.hljs-function
 			.hljs-keywords
 			.hljs-string
@@ -15,7 +15,7 @@ NOTE_1:	PureBASIC code syntax highlighting only applies the following classes:
 
 		Other classes are added here for the benefit of styling other languages with the look and feel of PureBASIC native IDE style.
 		If you need to customize a stylesheet for PureBASIC only, remove all non-relevant classes -- PureBASIC-related classes are followed by
-		a "--- used for PureBASIC ... ---" comment on same line.
+		a "--- used for PureBASIC ... ---" common on same line.
 
 NOTE_2:	Color names provided in comments were derived using "Name that Color" online tool:
 			http://chir.ag/projects/name-that-color

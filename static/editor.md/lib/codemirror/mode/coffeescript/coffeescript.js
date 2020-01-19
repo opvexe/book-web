@@ -72,7 +72,7 @@ CodeMirror.defineMode("coffeescript", function(conf, parserConf) {
 
     var ch = stream.peek();
 
-    // Handle docco title comment (single line)
+    // Handle docco title common (single line)
     if (stream.match("####")) {
       stream.skipToEnd();
       return "comment";
@@ -84,7 +84,7 @@ CodeMirror.defineMode("coffeescript", function(conf, parserConf) {
       return state.tokenize(stream, state);
     }
 
-    // Single line comment
+    // Single line common
     if (ch === "#") {
       stream.skipToEnd();
       return "comment";

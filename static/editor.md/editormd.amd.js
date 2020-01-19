@@ -75,7 +75,7 @@
                 cmAddonPath + "fold/brace-fold",
                 cmAddonPath + "fold/xml-fold", 
                 cmAddonPath + "fold/markdown-fold",
-                cmAddonPath + "fold/comment-fold", 
+                cmAddonPath + "fold/common-fold", 
                 cmAddonPath + "mode/overlay", 
                 cmAddonPath + "selection/active-line", 
                 cmAddonPath + "edit/closebrackets", 

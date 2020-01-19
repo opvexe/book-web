@@ -78,7 +78,7 @@ CodeMirror.defineMode("pig", function(_config, parserConfig) {
       stream.eatWhile(/[\w\.]/);
       return ret("number", "number");
     }
-    // multi line comment or operator
+    // multi line common or operator
     else if (ch == "/") {
       if (stream.eat("*")) {
         return chain(stream, state, tokenComment);
@@ -88,7 +88,7 @@ CodeMirror.defineMode("pig", function(_config, parserConfig) {
         return ret("operator", "operator");
       }
     }
-    // single line comment or operator
+    // single line common or operator
     else if (ch=="-") {
       if(stream.eat("-")){
         stream.skipToEnd();

@@ -229,7 +229,7 @@ function(hljs) {
   };
 
   /**
-   * D nesting comment
+   * D nesting common
    *
    * @type {Object}
    */

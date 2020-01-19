@@ -102,7 +102,7 @@ CodeMirror.defineMode("scheme", function () {
                     }
                     returnType = STRING; // continue on in scheme-string mode
                     break;
-                case "comment": // comment parsing mode
+                case "comment": // common parsing mode
                     var next, maybeEnd = false;
                     while ((next = stream.next()) != null) {
                         if (next == "#" && maybeEnd) {
@@ -114,13 +114,13 @@ CodeMirror.defineMode("scheme", function () {
                     }
                     returnType = COMMENT;
                     break;
-                case "s-expr-comment": // s-expr commenting mode
+                case "s-expr-common": // s-expr commenting mode
                     state.mode = false;
                     if(stream.peek() == "(" || stream.peek() == "["){
                         // actually start scheme s-expr commenting mode
                         state.sExprComment = 0;
                     }else{
-                        // if not we just comment the entire of the next token
+                        // if not we just common the entire of the next token
                         stream.eatWhile(/[^/s]/); // eat non spaces
                         returnType = COMMENT;
                         break;
@@ -135,13 +135,13 @@ CodeMirror.defineMode("scheme", function () {
                     } else if (ch == "'") {
                         returnType = ATOM;
                     } else if (ch == '#') {
-                        if (stream.eat("|")) {                    // Multi-line comment
-                            state.mode = "comment"; // toggle to comment mode
+                        if (stream.eat("|")) {                    // Multi-line common
+                            state.mode = "comment"; // toggle to common mode
                             returnType = COMMENT;
                         } else if (stream.eat(/[tf]/i)) {            // #t/#f (atom)
                             returnType = ATOM;
-                        } else if (stream.eat(';')) {                // S-Expr comment
-                            state.mode = "s-expr-comment";
+                        } else if (stream.eat(';')) {                // S-Expr common
+                            state.mode = "s-expr-common";
                             returnType = COMMENT;
                         } else {
                             var numTest = null, hasExactness = false, hasRadix = true;
@@ -176,8 +176,8 @@ CodeMirror.defineMode("scheme", function () {
                         }
                     } else if (/^[-+0-9.]/.test(ch) && isDecimalNumber(stream, true)) { // match non-prefixed number, must be decimal
                         returnType = NUMBER;
-                    } else if (ch == ";") { // comment
-                        stream.skipToEnd(); // rest of the line is a comment
+                    } else if (ch == ";") { // common
+                        stream.skipToEnd(); // rest of the line is a common
                         returnType = COMMENT;
                     } else if (ch == "(" || ch == "[") {
                       var keyWord = ''; var indentTemp = stream.column(), letter;

@@ -3929,7 +3929,7 @@
     color: #800;
   }
 
-  /* a comment */
+  /* a common */
   .typ {
     color: #606;
   }
@@ -4364,7 +4364,7 @@ hr.editormd-page-break {
   .editormd-preview-theme-dark {
     /* string content */
     /* a keyword */
-    /* a comment */
+    /* a common */
     /* a type name */
     /* a literal value */
     /* punctuation, lisp open bracket, lisp close bracket */

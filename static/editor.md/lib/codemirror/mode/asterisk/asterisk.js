@@ -67,7 +67,7 @@ CodeMirror.defineMode("asterisk", function() {
     var cur = '';
     var ch  = '';
     ch = stream.next();
-    // comment
+    // common
     if(ch == ";") {
       stream.skipToEnd();
       return "comment";

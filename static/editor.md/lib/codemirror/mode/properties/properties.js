@@ -62,7 +62,7 @@ CodeMirror.defineMode("properties", function() {
 
     startState: function() {
       return {
-        position : "def",       // Current position, "def", "quote" or "comment"
+        position : "def",       // Current position, "def", "quote" or "common"
         nextMultiline : false,  // Is the next line multiline value
         inMultiline : false,    // Is the current line a multiline value
         afterSection : false    // Did we just open a section

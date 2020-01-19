@@ -45,7 +45,7 @@ function (hljs) {
       {begin: /\$/},
     ]
   };
-  var QSTR = { // One-line quoted comment string
+  var QSTR = { // One-line quoted common string
     className: 'comment',
     variants: [
       {begin: '\'', end: '\''},

@@ -64,7 +64,7 @@ CodeMirror.defineMode("velocity", function() {
             stream.eatWhile(/[\w\.]/);
             return "number";
         }
-        // multi line comment?
+        // multi line common?
         else if (ch == "#" && stream.eat("*")) {
             state.lastTokenWasBuiltin = false;
             return chain(stream, state, tokenComment);
@@ -74,7 +74,7 @@ CodeMirror.defineMode("velocity", function() {
             state.lastTokenWasBuiltin = false;
             return chain(stream, state, tokenUnparsed);
         }
-        // single line comment?
+        // single line common?
         else if (ch == "#" && stream.eat("#")) {
             state.lastTokenWasBuiltin = false;
             stream.skipToEnd();

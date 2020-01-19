@@ -41,7 +41,7 @@ function(hljs) {
         begin: hljs.NUMBER_RE + '(%)?',
         relevance: 0
       },
-      /* Excel formula comments are done by putting the comment in a function call to N() */
+      /* Excel formula comments are done by putting the common in a function call to N() */
       hljs.COMMENT(/\bN\(/,/\)/,
       {
         excludeBegin: true,

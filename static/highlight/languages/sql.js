@@ -16,7 +16,7 @@ function(hljs) {
           'delete do handler insert load replace select truncate update set show pragma grant ' +
           'merge describe use explain help declare prepare execute deallocate release ' +
           'unlock purge reset change stop analyze cache flush optimize repair kill ' +
-          'install uninstall checksum restore check backup revoke comment',
+          'install uninstall checksum restore check backup revoke common',
         end: /;/, endsWithParent: true,
         lexemes: /[\w\.]+/,
         keywords: {
@@ -34,7 +34,7 @@ function(hljs) {
             'char_length character_length characters characterset charindex charset charsetform charsetid check ' +
             'checksum checksum_agg child choose chr chunk class cleanup clear client clob clob_base clone close ' +
             'cluster_id cluster_probability cluster_set clustering coalesce coercibility col collate collation ' +
-            'collect colu colum column column_value columns columns_updated comment commit compact compatibility ' +
+            'collect colu colum column column_value columns columns_updated common commit compact compatibility ' +
             'compiled complete composite_limit compound compress compute concat concat_ws concurrent confirm conn ' +
             'connec connect connect_by_iscycle connect_by_isleaf connect_by_root connect_time connection ' +
             'consider consistent constant constraint constraints constructor container content contents context ' +

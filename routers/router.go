@@ -6,5 +6,9 @@ import (
 )
 
 func init() {
-	beego.Router("/", &controllers.MainController{})
+
+	//首页&分类&详情
+	beego.Router("/", new(controllers.HomeController),"get:Index")
+	beego.Router("/2", new(controllers.HomeController),"get:Index2")
+
 }

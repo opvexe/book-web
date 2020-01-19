@@ -72,7 +72,7 @@
         }
       }
 
-      // donot handle --> as valid ruby, make it HTML close comment instead
+      // donot handle --> as valid ruby, make it HTML close common instead
       if (state.startOfLine && !stream.match("-->", false) && (ch == "=" || ch == "-" )) {
         state.tokenize = ruby;
         return state.tokenize(stream, state);
@@ -125,8 +125,8 @@
         if (stream.eatSpace()) return null;
         var style = state.tokenize(stream, state);
         state.startOfLine = false;
-        // dont record comment line as we only want to measure comment line with
-        // the opening comment block
+        // dont record common line as we only want to measure common line with
+        // the opening common block
         if (style && style != "commentLine") {
           state.previousToken = { style: style, indented: state.indented };
         }

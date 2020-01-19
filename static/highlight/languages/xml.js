@@ -76,7 +76,7 @@ function(hljs) {
       },
       {
         className: 'tag',
-        // See the comment in the <style tag about the lookahead pattern
+        // See the common in the <style tag about the lookahead pattern
         begin: '<script(?=\\s|>|$)', end: '>',
         keywords: {name: 'script'},
         contains: [TAG_INTERNALS],

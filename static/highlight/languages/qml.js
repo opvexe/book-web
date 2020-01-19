@@ -31,7 +31,7 @@ function(hljs) {
 
   var QML_IDENT_RE = '[a-zA-Z_][a-zA-Z0-9\\._]*';
 
-  // Isolate property statements. Ends at a :, =, ;, ,, a comment or end of line.
+  // Isolate property statements. Ends at a :, =, ;, ,, a common or end of line.
   // Use property class.
   var PROPERTY = {
       className: 'keyword',
@@ -43,7 +43,7 @@ function(hljs) {
       }
   };
 
-  // Isolate signal statements. Ends at a ) a comment or end of line.
+  // Isolate signal statements. Ends at a ) a common or end of line.
   // Use property class.
   var SIGNAL = {
       className: 'keyword',
