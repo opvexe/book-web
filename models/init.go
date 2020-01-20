@@ -7,6 +7,15 @@ func init() {
 		new(Category),
 		new(Book),
 		new(BookCategory),
+		new(Document),
+		new(DocumentStore),
+		new(Attachment),
+		new(Member),
+		new(Collection),
+		new(Relationship),
+		new(Fans),
+		new(Comments),
+		new(Score),
 	)
 }
 
@@ -43,4 +52,29 @@ func TNAttachment() string {
 //关系表
 func TNRelationship() string {
 	return "md_relationship"
+}
+
+//成员表
+func TNMembers() string {
+	return "md_members"
+}
+
+//收藏表
+func TNCollection() string {
+	return "md_star"
+}
+
+//粉丝表
+func TNFans() string {
+	return "md_fans"
+}
+
+//评论表
+func TNComments() string {
+	return "md_comments"
+}
+
+//评分表
+func TNScore() string {
+	return "md_score"
 }
