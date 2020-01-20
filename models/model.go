@@ -4,7 +4,7 @@ import "time"
 
 // 书籍表
 type Book struct {
-	Id             int    `orm:"pk:auto" json:"id"`                //主键
+	BookId         int    `orm:"pk:auto" json:"book_id"`           //主键
 	BookName       string `orm:"size(500)" json:"book_name"`       //书名
 	Identify       string `orm:"size(100);unique" json:"identify"` //唯一标识
 	OrderIndex     int    `orm:"default(0)" json:"order_index"`
@@ -24,7 +24,6 @@ type Book struct {
 	CntComment     int    //评论人数
 	Author         string `orm:"size(50)"`                      //作者
 	AuthorURL      string `orm:"column(author_url);size(1000)"` //来源连接
-
 	CreateTime  time.Time `orm:"type(datetime);auto_now_add" json:"create_time"` //创建时间
 	ModifyTime  time.Time `orm:"type(datetime);auto_now_add" json:"modify_time"` //修改时间
 	ReleaseTime time.Time `orm:"type(datetime)" json:"release_time"`             //发布时间
