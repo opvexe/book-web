@@ -28,9 +28,9 @@ type Book struct {
 	CreateTime  time.Time `orm:"type(datetime);auto_now_add" json:"create_time"` //创建时间
 	ModifyTime  time.Time `orm:"type(datetime);auto_now_add" json:"modify_time"` //修改时间
 	ReleaseTime time.Time `orm:"type(datetime)" json:"release_time"`             //发布时间
+	//auto_now 每次 model 保存时都会对时间自动更新
+	//auto_now_add 第一次保存时才设置时间
 }
-//auto_now 每次 model 保存时都会对时间自动更新
-//auto_now_add 第一次保存时才设置时间
 
 //书籍分类表
 type Category struct {
