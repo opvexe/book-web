@@ -57,7 +57,7 @@ type Collection struct {
 	BookId   int
 }
 
-//成员表
+// 用户表
 type Member struct {
 	MemberId      int       `orm:"pk;auto" json:"member_id"`
 	Account       string    `orm:"size(30);unique" json:"account"`
