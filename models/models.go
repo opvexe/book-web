@@ -19,7 +19,7 @@ type Book struct {
 	ModifyTime     time.Time `orm:"type(datetime);auto_now_add" json:"modify_time"`
 	ReleaseTime    time.Time `orm:"type(datetime);" json:"release_time"` //发布时间
 	DocCount       int       `json:"doc_count"`                          //文档数量
-	CommentCount   int       `orm:"type(int)" json:"comment_count"`
+	CommentCount   int       `orm:"type(int)" json:"comment_count"`		//章节数
 	Vcnt           int       `orm:"default(0)" json:"vcnt"`              //阅读次数
 	Collection     int       `orm:"column(star);default(0)" json:"star"` //收藏次数
 	Score          int       `orm:"default(40)" json:"score"`            //评分
