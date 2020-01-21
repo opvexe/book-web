@@ -91,7 +91,7 @@ CodeMirror.defineMode("sieve", function(config) {
     stream.eatWhile(/\w/);
     var cur = stream.current();
 
-    // "text:" *(SP / HTAB) (hash-common / CRLF)
+    // "text:" *(SP / HTAB) (hash-comment / CRLF)
     // *(multiline-literal / multiline-dotstart)
     // "." CRLF
     if ((cur == "text") && stream.eat(":"))
@@ -112,7 +112,7 @@ CodeMirror.defineMode("sieve", function(config) {
   function tokenMultiLineString(stream, state)
   {
     state._multiLineString = true;
-    // the first line is special it may contain a common
+    // the first line is special it may contain a comment
     if (!stream.sol()) {
       stream.eatSpace();
 

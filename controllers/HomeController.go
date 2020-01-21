@@ -1,20 +1,21 @@
 package controllers
 
 import (
-	"errors"
-	"github.com/astaxie/beego"
 	"sass-book-web/models"
+
+	"github.com/astaxie/beego"
 )
 
 type HomeController struct {
 	BaseController
 }
 
-func (h *HomeController) Index() {
-	if cates, err := models.GetCates(-1, 1); err != nil {
-		h.Data["Cates"] = cates
+func (c *HomeController) Index() {
+	if cates, err := new(models.Category).GetCates(-1, 1); err == nil {
+		c.Data["Cates"] = cates
 	} else {
-		beego.Error(errors.New("获取首页分类失败"))
+		beego.Error(err.Error())
 	}
-	h.TplName = "home/list.html"
+
+	c.TplName = "home/list.html"
 }

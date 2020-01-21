@@ -1,15 +1,19 @@
 package models
 
-import "github.com/astaxie/beego/orm"
+import (
+	"fmt"
+
+	"github.com/astaxie/beego/orm"
+)
 
 func init() {
 	orm.RegisterModel(
 		new(Category),
 		new(Book),
-		new(BookCategory),
 		new(Document),
-		new(DocumentStore),
 		new(Attachment),
+		new(DocumentStore),
+		new(BookCategory),
 		new(Member),
 		new(Collection),
 		new(Relationship),
@@ -19,62 +23,76 @@ func init() {
 	)
 }
 
-//分类表
+/*
+* Table Names
+* */
+
 func TNCategory() string {
 	return "md_category"
 }
 
-//中间表
 func TNBookCategory() string {
 	return "md_book_category"
 }
 
-//book表
 func TNBook() string {
-	return "md_book"
+	return "md_books"
 }
 
-//文档表
 func TNDocuments() string {
 	return "md_documents"
 }
-
-//文档存储表
 func TNDocumentStore() string {
 	return "md_document_store"
 }
 
-//附件表
 func TNAttachment() string {
 	return "md_attachment"
 }
 
-//关系表
 func TNRelationship() string {
 	return "md_relationship"
 }
 
-//成员表
 func TNMembers() string {
 	return "md_members"
 }
 
-//收藏表
 func TNCollection() string {
 	return "md_star"
 }
 
-//粉丝表
 func TNFans() string {
 	return "md_fans"
 }
 
-//评论表
 func TNComments() string {
 	return "md_comments"
 }
 
-//评分表
 func TNScore() string {
 	return "md_score"
+}
+
+/*
+* Tool Funcs
+* */
+//设置增减
+//@param            table           需要处理的数据表
+//@param            field           字段
+//@param            condition       条件
+//@param            incre           是否是增长值，true则增加，false则减少
+//@param            step            增或减的步长
+func IncOrDec(table string, field string, condition string, incre bool, step ...int) (err error) {
+	mark := "-"
+	if incre {
+		mark = "+"
+	}
+	s := 1
+	if len(step) > 0 {
+		s = step[0]
+	}
+	sql := fmt.Sprintf("update %v set %v=%v%v%v where %v", table, field, field, mark, s, condition)
+	_, err = orm.NewOrm().Raw(sql).Exec()
+	return
 }

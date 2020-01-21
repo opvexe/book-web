@@ -12,7 +12,7 @@
   "use strict";
   // declare global: JSHINT
 
-  var bogus = [ "Dangerous common" ];
+  var bogus = [ "Dangerous comment" ];
 
   var warnings = [ [ "Expected '{'",
                      "Statement body should be inside '{ }' braces." ] ];

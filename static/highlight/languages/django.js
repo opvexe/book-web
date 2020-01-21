@@ -42,7 +42,7 @@ function(hljs) {
             begin: /\w+/,
             keywords: {
               name:
-                'common endcomment load templatetag ifchanged endifchanged if endif firstof for ' +
+                'comment endcomment load templatetag ifchanged endifchanged if endif firstof for ' +
                 'endfor ifnotequal endifnotequal widthratio extends include spaceless ' +
                 'endspaceless regroup ifequal endifequal ssi now with cycle url filter ' +
                 'endfilter debug block endblock else autoescape endautoescape csrf_token empty elif ' +

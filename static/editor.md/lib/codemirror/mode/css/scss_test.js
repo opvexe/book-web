@@ -36,10 +36,10 @@
     "[builtin #hello][qualifier .world]{}");
 
   MT('singleline_comment',
-    "[common // this is a common]");
+    "[comment // this is a comment]");
 
   MT('multiline_comment',
-    "[common /*foobar*/]");
+    "[comment /*foobar*/]");
 
   MT('attribute_with_hyphen',
     "[tag foo] { [property font-size]:[number 10px] }");

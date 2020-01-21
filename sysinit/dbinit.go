@@ -1,15 +1,21 @@
 package sysinit
 
 import (
+	_ "sass-book-web/models"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 //调用方式
+//dbinit() 或 dbinit("w") 或 dbinit("default") //初始化主库
+//dbinit("w","r")	//同时初始化主库和从库
+//dbinit("w")
 func dbinit(aliases ...string) {
 	//如果是开发模式，则显示命令信息
 	isDev := (beego.AppConfig.String("runmode") == "dev")
+
 	if len(aliases) > 0 {
 		for _, alias := range aliases {
 			registDatabase(alias)
@@ -48,6 +54,7 @@ func registDatabase(alias string) {
 	dbHost := beego.AppConfig.String("db_" + alias + "_host")
 	//数据库端口
 	dbPort := beego.AppConfig.String("db_" + alias + "_port")
-	//连接数据库
+
 	orm.RegisterDataBase(dbAlias, "mysql", dbUser+":"+dbPwd+"@tcp("+dbHost+":"+dbPort+")/"+dbName+"?charset=utf8", 30)
+
 }

@@ -123,7 +123,7 @@ function(hljs) {
           className: 'regexp',
           begin: '(m|qr)?/', end: '/[a-z]*',
           contains: [hljs.BACKSLASH_ESCAPE],
-          relevance: 0 // allows empty "//" which is a common common delimiter in other languages
+          relevance: 0 // allows empty "//" which is a common comment delimiter in other languages
         }
       ]
     },

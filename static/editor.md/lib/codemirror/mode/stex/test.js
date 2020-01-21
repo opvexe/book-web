@@ -36,16 +36,16 @@
      "[tag \\PSforPDF][bracket [[][atom 1][bracket ]]{]#1[bracket }]");
 
   MT("comment",
-     "[common % foo]");
+     "[comment % foo]");
 
   MT("tagComment",
-     "[tag \\item][common % bar]");
+     "[tag \\item][comment % bar]");
 
   MT("commentTag",
-     " [common % \\item]");
+     " [comment % \\item]");
 
   MT("commentLineBreak",
-     "[common %]",
+     "[comment %]",
      "foo");
 
   MT("tagErrorCurly",
@@ -55,7 +55,7 @@
      "[tag \\item][error ]]][bracket {]");
 
   MT("commentCurly",
-     "[common % }]");
+     "[comment % }]");
 
   MT("tagHash",
      "the [tag \\#] key");
@@ -115,7 +115,7 @@
      "More [keyword $$]\t[variable-2 S][tag ^][variable-2 n][tag \\sum] [variable-2 i][keyword $$] other text");
 
   MT("mathWithComment",
-     "[keyword $][variable-2 x] [common % $]",
+     "[keyword $][variable-2 x] [comment % $]",
      "[variable-2 y][keyword $] other text");
 
   MT("lineBreakArgument",

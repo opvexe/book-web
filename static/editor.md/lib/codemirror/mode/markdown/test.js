@@ -20,10 +20,10 @@
      "[strong&formatting&formatting-strong __][strong foo][strong&formatting&formatting-strong __]");
 
   FT("formatting_codeBackticks",
-     "[common&formatting&formatting-code `][common foo][common&formatting&formatting-code `]");
+     "[comment&formatting&formatting-code `][comment foo][comment&formatting&formatting-code `]");
 
   FT("formatting_doubleBackticks",
-     "[common&formatting&formatting-code ``][common foo ` bar][common&formatting&formatting-code ``]");
+     "[comment&formatting&formatting-code ``][comment foo ` bar][comment&formatting&formatting-code ``]");
 
   FT("formatting_atxHeader",
      "[header&header-1&formatting&formatting-header&formatting-header-1 #][header&header-1  foo # bar ][header&header-1&formatting&formatting-header&formatting-header-1 #]");
@@ -75,75 +75,75 @@
 
   // Code blocks using 4 spaces (regardless of CodeMirror.tabSize value)
   MT("codeBlocksUsing4Spaces",
-     "    [common foo]");
+     "    [comment foo]");
 
   // Code blocks using 4 spaces with internal indentation
   MT("codeBlocksUsing4SpacesIndentation",
-     "    [common bar]",
-     "        [common hello]",
-     "            [common world]",
-     "    [common foo]",
+     "    [comment bar]",
+     "        [comment hello]",
+     "            [comment world]",
+     "    [comment foo]",
      "bar");
 
   // Code blocks using 4 spaces with internal indentation
   MT("codeBlocksUsing4SpacesIndentation",
      " foo",
-     "    [common bar]",
-     "        [common hello]",
-     "    [common world]");
+     "    [comment bar]",
+     "        [comment hello]",
+     "    [comment world]");
 
   // Code blocks should end even after extra indented lines
   MT("codeBlocksWithTrailingIndentedLine",
-     "    [common foo]",
-     "        [common bar]",
-     "    [common baz]",
+     "    [comment foo]",
+     "        [comment bar]",
+     "    [comment baz]",
      "    ",
      "hello");
 
   // Code blocks using 1 tab (regardless of CodeMirror.indentWithTabs value)
   MT("codeBlocksUsing1Tab",
-     "\t[common foo]");
+     "\t[comment foo]");
 
   // Inline code using backticks
   MT("inlineCodeUsingBackticks",
-     "foo [common `bar`]");
+     "foo [comment `bar`]");
 
   // Block code using single backtick (shouldn't work)
   MT("blockCodeSingleBacktick",
-     "[common `]",
+     "[comment `]",
      "foo",
-     "[common `]");
+     "[comment `]");
 
   // Unclosed backticks
   // Instead of simply marking as CODE, it would be nice to have an
   // incomplete flag for CODE, that is styled slightly different.
   MT("unclosedBackticks",
-     "foo [common `bar]");
+     "foo [comment `bar]");
 
   // Per documentation: "To include a literal backtick character within a
   // code span, you can use multiple backticks as the opening and closing
   // delimiters"
   MT("doubleBackticks",
-     "[common ``foo ` bar``]");
+     "[comment ``foo ` bar``]");
 
   // Tests based on Dingus
   // http://daringfireball.net/projects/markdown/dingus
   //
   // Multiple backticks within an inline code block
   MT("consecutiveBackticks",
-     "[common `foo```bar`]");
+     "[comment `foo```bar`]");
 
   // Multiple backticks within an inline code block with a second code block
   MT("consecutiveBackticks",
-     "[common `foo```bar`] hello [common `world`]");
+     "[comment `foo```bar`] hello [comment `world`]");
 
   // Unclosed with several different groups of backticks
   MT("unclosedBackticks",
-     "[common ``foo ``` bar` hello]");
+     "[comment ``foo ``` bar` hello]");
 
   // Closed with several different groups of backticks
   MT("closedBackticks",
-     "[common ``foo ``` bar` hello``] world");
+     "[comment ``foo ``` bar` hello``] world");
 
   // atx headers
   // http://daringfireball.net/projects/markdown/syntax#header
@@ -297,28 +297,28 @@
      "[variable-2 * ][variable-2&em *foo*][variable-2  bar]",
      "[variable-2 * ][variable-2&strong **foo**][variable-2  bar]",
      "[variable-2 * ][variable-2&strong **][variable-2&em&strong *foo**][variable-2&em *][variable-2  bar]",
-     "[variable-2 * ][variable-2&common `foo`][variable-2  bar]");
+     "[variable-2 * ][variable-2&comment `foo`][variable-2  bar]");
 
   // Formatting in lists (+)
   MT("listPlusFormatting",
      "[variable-2 + ][variable-2&em *foo*][variable-2  bar]",
      "[variable-2 + ][variable-2&strong **foo**][variable-2  bar]",
      "[variable-2 + ][variable-2&strong **][variable-2&em&strong *foo**][variable-2&em *][variable-2  bar]",
-     "[variable-2 + ][variable-2&common `foo`][variable-2  bar]");
+     "[variable-2 + ][variable-2&comment `foo`][variable-2  bar]");
 
   // Formatting in lists (-)
   MT("listDashFormatting",
      "[variable-2 - ][variable-2&em *foo*][variable-2  bar]",
      "[variable-2 - ][variable-2&strong **foo**][variable-2  bar]",
      "[variable-2 - ][variable-2&strong **][variable-2&em&strong *foo**][variable-2&em *][variable-2  bar]",
-     "[variable-2 - ][variable-2&common `foo`][variable-2  bar]");
+     "[variable-2 - ][variable-2&comment `foo`][variable-2  bar]");
 
   // Formatting in lists (1.)
   MT("listNumberFormatting",
      "[variable-2 1. ][variable-2&em *foo*][variable-2  bar]",
      "[variable-2 2. ][variable-2&strong **foo**][variable-2  bar]",
      "[variable-2 3. ][variable-2&strong **][variable-2&em&strong *foo**][variable-2&em *][variable-2  bar]",
-     "[variable-2 4. ][variable-2&common `foo`][variable-2  bar]");
+     "[variable-2 4. ][variable-2&comment `foo`][variable-2  bar]");
 
   // Paragraph lists
   MT("listParagraph",
@@ -385,7 +385,7 @@
      "",
      "[variable-2 * bar]",
      "",
-     "        [common > hello]",
+     "        [comment > hello]",
      "",
      "    [variable-2 world]");
 
@@ -395,7 +395,7 @@
      "",
      "    [variable-2 bar]",
      "",
-     "        [common hello]",
+     "        [comment hello]",
      "",
      "    [variable-2 world]");
 
@@ -442,16 +442,16 @@
      "",
      "    [variable-3 + bar]",
      "",
-     "            [common hello]");
+     "            [comment hello]");
 
   // Code with internal indentation
   MT("listCodeIndentation",
      "[variable-2 * foo]",
      "",
-     "        [common bar]",
-     "            [common hello]",
-     "                [common world]",
-     "        [common foo]",
+     "        [comment bar]",
+     "            [comment hello]",
+     "                [comment world]",
+     "        [comment foo]",
      "    [variable-2 bar]");
 
   // List nesting edge cases
@@ -474,7 +474,7 @@
   MT("listCodeText",
      "[variable-2 * foo]",
      "",
-     "        [common bar]",
+     "        [comment bar]",
      "",
      "hello");
 
@@ -698,7 +698,7 @@
      "foo \\`bar\\`");
 
   MT("doubleEscapeBacktick",
-     "foo \\\\[common `bar\\\\`]");
+     "foo \\\\[comment `bar\\\\`]");
 
   MT("escapeAsterisk",
      "foo \\*bar\\*");
@@ -729,9 +729,9 @@
      "[variable-2 * [ ]] bar]");
 
   MT("fencedCodeBlocks",
-     "[common ```]",
+     "[comment ```]",
      "foo",
-     "[common ```]");
+     "[comment ```]");
 
   // Tests that require XML mode
 

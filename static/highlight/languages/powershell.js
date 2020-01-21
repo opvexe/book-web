@@ -55,9 +55,9 @@ function(hljs) {
     hljs.COMMENT(null, null),
     {
       variants: [
-        /* single-line common */
+        /* single-line comment */
         { begin: /#/, end: /$/ },
-        /* multi-line common */
+        /* multi-line comment */
         { begin: /<#/, end: /#>/ }
       ],
       contains: [PS_HELPTAGS]

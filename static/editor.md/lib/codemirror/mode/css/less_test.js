@@ -10,7 +10,7 @@
   MT("variable",
      "[variable-2 @base]: [atom #f04615];",
      "[qualifier .class] {",
-     "  [property width]: [variable percentage]([number 0.5]); [common // returns `50%`]",
+     "  [property width]: [variable percentage]([number 0.5]); [comment // returns `50%`]",
      "  [property color]: [variable saturate]([variable-2 @base], [number 5%]);",
      "}");
 

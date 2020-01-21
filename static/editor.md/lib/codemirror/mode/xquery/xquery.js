@@ -135,7 +135,7 @@ CodeMirror.defineMode("xquery", function() {
       stream.match(/^\d*(?:\.\d*)?(?:E[+\-]?\d+)?/);
       return ret("number", "atom");
     }
-    // common start
+    // comment start
     else if (ch === "(" && stream.eat(":")) {
       pushStateStack(state, { type: "comment"});
       return chain(stream, state, tokenComment);
@@ -383,7 +383,7 @@ CodeMirror.defineMode("xquery", function() {
     while (ch = stream.next()) {
       if (ch == "?" && stream.match(">", true)) {
         state.tokenize = tokenBase;
-        return ret("comment", "common meta");
+        return ret("comment", "comment meta");
       }
     }
   }

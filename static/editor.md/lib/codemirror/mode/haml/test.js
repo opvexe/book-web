@@ -22,10 +22,10 @@
      "[tag !!! XML]");
 
   MT("comment",
-     "[common / Hello WORLD]");
+     "[comment / Hello WORLD]");
 
   MT("notComment",
-     "[tag %h1] This is not a / common ");
+     "[tag %h1] This is not a / comment ");
 
   MT("attributes",
      "[tag %a]([variable title][operator =][string \"test\"]){[atom :title] [operator =>] [string \"test\"]}");
@@ -50,8 +50,8 @@
 
   MT("multilineRuby",
       "[tag %p]",
-      "  [common -# this is a common]",
-      "     [common and this is a common too]",
+      "  [comment -# this is a comment]",
+      "     [comment and this is a comment too]",
       "  Date/Time",
       "  [operator -] [variable now] [operator =] [tag DateTime][operator .][property now]",
       "  [tag %strong=] [variable now]",
@@ -61,21 +61,21 @@
       "     [operator =][string \"Birthday\"]");
 
   MT("multilineComment",
-      "[common /]",
-      "  [common Multiline]",
-      "  [common Comment]");
+      "[comment /]",
+      "  [comment Multiline]",
+      "  [comment Comment]");
 
   MT("hamlComment",
-     "[common -# this is a common]");
+     "[comment -# this is a comment]");
 
   MT("multilineHamlComment",
-     "[common -# this is a common]",
-     "   [common and this is a common too]");
+     "[comment -# this is a comment]",
+     "   [comment and this is a comment too]");
 
   MT("multilineHTMLComment",
-    "[common <!--]",
-    "  [common what a common]",
-    "  [common -->]");
+    "[comment <!--]",
+    "  [comment what a comment]",
+    "  [comment -->]");
 
   MT("hamlAfterRubyTag",
     "[attribute .block]",

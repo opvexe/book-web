@@ -49,7 +49,7 @@
      '[meta ?>]');
 
   MT('variable_interpolation_escaping',
-     '[meta <?php] [common /* Escaping */]',
+     '[meta <?php] [comment /* Escaping */]',
      '[keyword echo] [string "aaa\\$aaaa->aaa.aaa"];',
      '[keyword echo] [string "aaa\\$aaaa[[2]]aaa.aaa"];',
      '[keyword echo] [string "aaa\\$aaaa[[asd]]aaa.aaa"];',
@@ -69,10 +69,10 @@
      '[keyword echo] [string "aaa][variable-2 $]{[variable aaaa][meta ?>]aaaaaa');
 
   MT('variable_interpolation_complex_syntax_2',
-     '[meta <?php] [common /* Monsters */]',
-     '[keyword echo] [string "][variable-2 $]{[variable aaa][common /*}?>} $aaa<?php } */]}[string ->aaa.aaa"];',
-     '[keyword echo] [string "][variable-2 $]{[variable aaa][common /*}?>*/][[','  [string "aaa][variable-2 $aaa][string {}][variable-2 $]{[variable aaa]}[string "]',']]}[string ->aaa.aaa"];',
-     '[keyword echo] [string "][variable-2 $]{[variable aaa][common /*} } $aaa } */]}[string ->aaa.aaa"];');
+     '[meta <?php] [comment /* Monsters */]',
+     '[keyword echo] [string "][variable-2 $]{[variable aaa][comment /*}?>} $aaa<?php } */]}[string ->aaa.aaa"];',
+     '[keyword echo] [string "][variable-2 $]{[variable aaa][comment /*}?>*/][[','  [string "aaa][variable-2 $aaa][string {}][variable-2 $]{[variable aaa]}[string "]',']]}[string ->aaa.aaa"];',
+     '[keyword echo] [string "][variable-2 $]{[variable aaa][comment /*} } $aaa } */]}[string ->aaa.aaa"];');
 
 
   function build_recursive_monsters(nt, t, n){
@@ -84,12 +84,12 @@
 
   var m1 = build_recursive_monsters(
     ['[string "][variable-2 $]{[variable aaa] [operator +] ', '}[string "]'],
-    '[common /* }?>} */] [string "aaa][variable-2 $aaa][string .aaa"]',
+    '[comment /* }?>} */] [string "aaa][variable-2 $aaa][string .aaa"]',
     10
   );
 
   MT('variable_interpolation_complex_syntax_3_1',
-     '[meta <?php] [common /* Recursive monsters */]',
+     '[meta <?php] [comment /* Recursive monsters */]',
      '[keyword echo] ' + m1[4] + ';',
      '[keyword echo] ' + m1[7] + ';',
      '[keyword echo] ' + m1[8] + ';',
@@ -106,12 +106,12 @@
 
   var m2 = build_recursive_monsters(
     ['[string "a][variable-2 $]{[variable aaa] [operator +] ', ' [operator +] ', '}[string .a"]'],
-    '[common /* }?>{{ */] [string "a?>}{{aa][variable-2 $aaa][string .a}a?>a"]',
+    '[comment /* }?>{{ */] [string "a?>}{{aa][variable-2 $aaa][string .a}a?>a"]',
     5
   );
 
   MT('variable_interpolation_complex_syntax_3_2',
-     '[meta <?php] [common /* Recursive monsters 2 */]',
+     '[meta <?php] [comment /* Recursive monsters 2 */]',
      '[keyword echo] ' + m2[0] + ';',
      '[keyword echo] ' + m2[1] + ';',
      '[keyword echo] ' + m2[5] + ';',
@@ -132,12 +132,12 @@
     m1,
     m2,
     ['[string "a][variable-2 $]{[variable aaa] [operator +] ', ' [operator +] ', ' [operator +] ', '}[string .a"]'],
-    '[common /* }?>{{ */] [string "a?>}{{aa][variable-2 $aaa][string .a}a?>a"]',
+    '[comment /* }?>{{ */] [string "a?>}{{aa][variable-2 $aaa][string .a}a?>a"]',
     4
   );
 
   MT('variable_interpolation_complex_syntax_3_3',
-     '[meta <?php] [common /* Recursive monsters 2 */]',
+     '[meta <?php] [comment /* Recursive monsters 2 */]',
      '[keyword echo] ' + m3[4] + ';',
      '[keyword echo] ' + m3[0] + ';',
      '[keyword echo] ' + m3[3] + ';',
@@ -150,5 +150,5 @@
      "[meta <?php]",
      "[string <<<here]",
      "[string doc ][variable-2 $]{[variable yay]}[string more]",
-     "[string here]; [common // normal]");
+     "[string here]; [comment // normal]");
 })();

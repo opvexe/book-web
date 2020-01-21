@@ -52,7 +52,7 @@ CodeMirror.defineMode('shell', function() {
     if (ch === '#') {
       if (sol && stream.eat('!')) {
         stream.skipToEnd();
-        return 'meta'; // 'common'?
+        return 'meta'; // 'comment'?
       }
       stream.skipToEnd();
       return 'comment';

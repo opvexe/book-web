@@ -43,7 +43,7 @@
   MT("hashbang",
      "[meta #!/bin/bash]");
   MT("comment",
-     "text [common # Blurb]");
+     "text [comment # Blurb]");
 
   MT("numbers",
      "[number 0] [number 1] [number 2]");

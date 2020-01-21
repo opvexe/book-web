@@ -1,11 +1,11 @@
 package utils
 
 import (
-	_ "errors"
+	"errors"
 	"fmt"
 	html1 "html/template"
-	_ "io/ioutil"
-	_ "net/http"
+	"io/ioutil"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"

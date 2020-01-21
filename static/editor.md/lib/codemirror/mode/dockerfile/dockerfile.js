@@ -21,7 +21,7 @@
 
   CodeMirror.defineSimpleMode("dockerfile", {
     start: [
-      // Block common: This is a line starting with a common
+      // Block comment: This is a line starting with a comment
       {
         regex: /#.*$/,
         token: "comment"
@@ -44,7 +44,7 @@
     ],
     arguments: [
       {
-        // Line common without instruction arguments is an error
+        // Line comment without instruction arguments is an error
         regex: /#.*$/,
         token: "error",
         next: "start"
@@ -54,7 +54,7 @@
         token: null
       },
       {
-        // Match everything except for the inline common
+        // Match everything except for the inline comment
         regex: /[^#]+/,
         token: null,
         next: "start"

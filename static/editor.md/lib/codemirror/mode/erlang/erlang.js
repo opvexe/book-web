@@ -130,7 +130,7 @@ CodeMirror.defineMode("erlang", function(cmCfg) {
 
     var ch = stream.next();
 
-    // common
+    // comment
     if (ch == '%') {
       stream.skipToEnd();
       return rval(state,stream,"comment");

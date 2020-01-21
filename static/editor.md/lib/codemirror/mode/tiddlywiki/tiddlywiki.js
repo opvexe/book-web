@@ -170,7 +170,7 @@ CodeMirror.defineMode("tiddlywiki", function () {
       stream.eatWhile(/\d/);
       return ret("number", "number");
     }
-    if (ch == "/") { // tw invisible common
+    if (ch == "/") { // tw invisible comment
       if (stream.eat("%")) {
         return chain(stream, state, twTokenComment);
       }
@@ -217,7 +217,7 @@ CodeMirror.defineMode("tiddlywiki", function () {
 
   } // jsTokenBase()
 
-  // tw invisible common
+  // tw invisible comment
   function twTokenComment(stream, state) {
     var maybeEnd = false,
     ch;

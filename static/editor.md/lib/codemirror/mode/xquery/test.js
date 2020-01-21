@@ -11,15 +11,15 @@
   function MT(name) { test.mode(name, mode, Array.prototype.slice.call(arguments, 1)); }
 
   MT("eviltest",
-     "[keyword xquery] [keyword version] [variable &quot;1][keyword .][atom 0][keyword -][variable ml&quot;][def&variable ;]      [common (: this is       : a          \"common\" :)]",
+     "[keyword xquery] [keyword version] [variable &quot;1][keyword .][atom 0][keyword -][variable ml&quot;][def&variable ;]      [comment (: this is       : a          \"comment\" :)]",
      "      [keyword let] [variable $let] [keyword :=] [variable &lt;x] [variable attr][keyword =][variable &quot;value&quot;&gt;&quot;test&quot;&lt;func&gt][def&variable ;function]() [variable $var] {[keyword function]()} {[variable $var]}[variable &lt;][keyword /][variable func&gt;&lt;][keyword /][variable x&gt;]",
      "      [keyword let] [variable $joe][keyword :=][atom 1]",
      "      [keyword return] [keyword element] [variable element] {",
      "          [keyword attribute] [variable attribute] { [atom 1] },",
      "          [keyword element] [variable test] { [variable &#39;a&#39;] },           [keyword attribute] [variable foo] { [variable &quot;bar&quot;] },",
      "          [def&variable fn:doc]()[[ [variable foo][keyword /][variable @bar] [keyword eq] [variable $let] ]],",
-     "          [keyword //][variable x] }                 [common (: a more 'evil' test :)]",
-     "      [common (: Modified Blakeley example (: with nested common :) ... :)]",
+     "          [keyword //][variable x] }                 [comment (: a more 'evil' test :)]",
+     "      [comment (: Modified Blakeley example (: with nested comment :) ... :)]",
      "      [keyword declare] [keyword private] [keyword function] [def&variable local:declare]() {()}[variable ;]",
      "      [keyword declare] [keyword private] [keyword function] [def&variable local:private]() {()}[variable ;]",
      "      [keyword declare] [keyword private] [keyword function] [def&variable local:function]() {()}[variable ;]",
@@ -59,7 +59,7 @@
      "[tag <out>]{[def&variable 'http://www.example.com/ns/my':fn]([atom 12])}[tag </out>]");
 
   MT("testProcessingInstructions",
-     "[def&variable data]([common&meta <?target content?>]) [keyword instance] [keyword of] [atom xs:string]");
+     "[def&variable data]([comment&meta <?target content?>]) [keyword instance] [keyword of] [atom xs:string]");
 
   MT("testQuoteEscapeDouble",
      "[keyword let] [variable $rootfolder] [keyword :=] [string \"c:\\builds\\winnt\\HEAD\\qa\\scripts\\\"]",
