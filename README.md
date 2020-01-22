@@ -25,6 +25,29 @@ $ brew services start elasticsearch@5.6
 # 访问http://localhost:9200
 ```
 
+```go
+//put请求
+func (this *ElasticSearchClient) put(api string) (req *httplib.BeegoHTTPRequest) {
+	return httplib.Put(api).Header("Content-Type", "application/json").SetTimeout(this.Timeout, this.Timeout)
+}
+
+//post请求
+func (this *ElasticSearchClient) post(api string) (req *httplib.BeegoHTTPRequest) {
+	return httplib.Post(api).Header("Content-Type", "application/json").SetTimeout(this.Timeout, this.Timeout)
+}
+
+//delete请求
+func (this *ElasticSearchClient) delete(api string) (req *httplib.BeegoHTTPRequest) {
+	return httplib.Delete(api).Header("Content-Type", "application/json").SetTimeout(this.Timeout, this.Timeout)
+}
+
+//get请求
+func (this *ElasticSearchClient) get(api string) (req *httplib.BeegoHTTPRequest) {
+	return httplib.Get(api).Header("Content-Type", "application/json").SetTimeout(this.Timeout, this.Timeout)
+}
+
+```
+
 #### 1.4 mysql 主从搭配
 
 ```shell
