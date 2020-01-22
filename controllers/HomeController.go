@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"ziyoubiancheng/mbook/models"
+	"shumin-project/sass-book-web/models"
 
 	"github.com/astaxie/beego"
 )

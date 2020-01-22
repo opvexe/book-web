@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"ziyoubiancheng/mbook/controllers"
+	"shumin-project/sass-book-web/controllers"
 
 	"github.com/astaxie/beego"
 )

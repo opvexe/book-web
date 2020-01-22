@@ -2,10 +2,10 @@ package controllers
 
 import (
 	"strconv"
-	"ziyoubiancheng/mbook/common"
-	"ziyoubiancheng/mbook/models"
-	"ziyoubiancheng/mbook/utils"
-	"ziyoubiancheng/mbook/utils/dynamicache"
+	"shumin-project/sass-book-web/common"
+	"shumin-project/sass-book-web/models"
+	"shumin-project/sass-book-web/utils"
+	"shumin-project/sass-book-web/utils/dynamicache"
 
 	"github.com/astaxie/beego"
 )

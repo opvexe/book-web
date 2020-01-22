@@ -6,10 +6,10 @@ import (
 	"io"
 	"strings"
 	"time"
-	"ziyoubiancheng/mbook/common"
-	"ziyoubiancheng/mbook/models"
-	"ziyoubiancheng/mbook/utils"
-	"ziyoubiancheng/mbook/utils/pagecache"
+	"shumin-project/sass-book-web/common"
+	"shumin-project/sass-book-web/models"
+	"shumin-project/sass-book-web/utils"
+	"shumin-project/sass-book-web/utils/pagecache"
 
 	"github.com/astaxie/beego"
 )

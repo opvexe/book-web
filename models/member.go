@@ -5,8 +5,8 @@ import (
 	"regexp"
 	"strings"
 	"time"
-	"ziyoubiancheng/mbook/common"
-	"ziyoubiancheng/mbook/utils"
+	"shumin-project/sass-book-web/common"
+	"shumin-project/sass-book-web/utils"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"

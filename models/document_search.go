@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"ziyoubiancheng/mbook/utils/html2text"
+	"shumin-project/sass-book-web/utils/html2text"
 )
 
 // 文档搜索结果

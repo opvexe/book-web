@@ -1,7 +1,7 @@
 package sysinit
 
 import (
-	_ "ziyoubiancheng/mbook/models"
+	_ "shumin-project/sass-book-web/models"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"

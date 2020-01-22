@@ -11,11 +11,11 @@ import (
 	"strings"
 	"time"
 
-	"ziyoubiancheng/mbook/common"
-	"ziyoubiancheng/mbook/models"
-	"ziyoubiancheng/mbook/utils"
-	"ziyoubiancheng/mbook/utils/graphics"
-	"ziyoubiancheng/mbook/utils/store"
+	"shumin-project/sass-book-web/common"
+	"shumin-project/sass-book-web/models"
+	"shumin-project/sass-book-web/utils"
+	"shumin-project/sass-book-web/utils/graphics"
+	"shumin-project/sass-book-web/utils/store"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"

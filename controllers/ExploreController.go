@@ -3,8 +3,8 @@ package controllers
 import (
 	"math"
 	"strconv"
-	"ziyoubiancheng/mbook/models"
-	"ziyoubiancheng/mbook/utils"
+	"shumin-project/sass-book-web/models"
+	"shumin-project/sass-book-web/utils"
 
 	"github.com/astaxie/beego"
 )

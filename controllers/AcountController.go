@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"ziyoubiancheng/mbook/common"
-	"ziyoubiancheng/mbook/models"
-	"ziyoubiancheng/mbook/utils"
+	"shumin-project/sass-book-web/common"
+	"shumin-project/sass-book-web/models"
+	"shumin-project/sass-book-web/utils"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/cache"

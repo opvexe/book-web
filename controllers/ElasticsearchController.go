@@ -3,8 +3,8 @@ package controllers
 import (
 	"fmt"
 	"time"
-	"ziyoubiancheng/mbook/models"
-	"ziyoubiancheng/mbook/utils"
+	"shumin-project/sass-book-web/models"
+	"shumin-project/sass-book-web/utils"
 
 	"github.com/astaxie/beego"
 )

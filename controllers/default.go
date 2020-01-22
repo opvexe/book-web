@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"fmt"
-	"ziyoubiancheng/mbook/models"
+	"shumin-project/sass-book-web/models"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"

@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	_ "ziyoubiancheng/mbook/routers"
-	_ "ziyoubiancheng/mbook/sysinit"
-	"ziyoubiancheng/mbook/utils/pagecache"
+	_ "shumin-project/sass-book-web/routers"
+	_ "shumin-project/sass-book-web/sysinit"
+	"shumin-project/sass-book-web/utils/pagecache"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/toolbox"

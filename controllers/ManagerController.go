@@ -6,9 +6,9 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
-	"ziyoubiancheng/mbook/models"
-	"ziyoubiancheng/mbook/utils"
-	"ziyoubiancheng/mbook/utils/store"
+	"shumin-project/sass-book-web/models"
+	"shumin-project/sass-book-web/utils"
+	"shumin-project/sass-book-web/utils/store"
 
 	"github.com/astaxie/beego"
 )

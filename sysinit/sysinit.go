@@ -6,12 +6,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	conf "ziyoubiancheng/mbook/common"
-	"ziyoubiancheng/mbook/models"
-	"ziyoubiancheng/mbook/utils"
-	"ziyoubiancheng/mbook/utils/dynamicache"
-	"ziyoubiancheng/mbook/utils/pagecache"
-	"ziyoubiancheng/mbook/utils/store"
+	conf "shumin-project/sass-book-web/common"
+	"shumin-project/sass-book-web/models"
+	"shumin-project/sass-book-web/utils"
+	"shumin-project/sass-book-web/utils/dynamicache"
+	"shumin-project/sass-book-web/utils/pagecache"
+	"shumin-project/sass-book-web/utils/store"
 
 	"github.com/astaxie/beego"
 )

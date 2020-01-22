@@ -3,7 +3,7 @@ package models
 import (
 	"errors"
 	"time"
-	"ziyoubiancheng/mbook/common"
+	"shumin-project/sass-book-web/common"
 )
 
 //拼接返回到接口的图书信息
