@@ -11,11 +11,11 @@ import (
 	"strings"
 	"time"
 
-	"sass-book-web/common"
-	"sass-book-web/models"
-	"sass-book-web/utils"
-	"sass-book-web/utils/graphics"
-	"sass-book-web/utils/store"
+	"ziyoubiancheng/mbook/common"
+	"ziyoubiancheng/mbook/models"
+	"ziyoubiancheng/mbook/utils"
+	"ziyoubiancheng/mbook/utils/graphics"
+	"ziyoubiancheng/mbook/utils/store"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
@@ -309,6 +309,7 @@ func (c *BookController) Release() {
 
 	go func() {
 		models.NewDocument().ReleaseContent(bookId, c.BaseUrl())
+		models.ElasticBuildIndex(bookId)
 	}()
 
 	c.JsonResult(0, "已发布")

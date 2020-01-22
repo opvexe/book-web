@@ -2,10 +2,8 @@ package models
 
 import (
 	"errors"
-	"sass-book-web/common"
 	"time"
-
-	"github.com/astaxie/beego/orm"
+	"ziyoubiancheng/mbook/common"
 )
 
 //拼接返回到接口的图书信息
@@ -51,7 +49,7 @@ func (m *BookData) SelectByIdentify(identify string, memberId int) (result *Book
 	}
 
 	book := NewBook()
-	o := orm.NewOrm()
+	o := GetOrm("r")
 	err = o.QueryTable(TNBook()).Filter("identify", identify).One(book)
 	if err != nil {
 		return

@@ -3,13 +3,13 @@ package controllers
 import (
 	"os"
 	"path/filepath"
-	"sass-book-web/common"
-	"sass-book-web/models"
-	"sass-book-web/utils/graphics"
-	"sass-book-web/utils/store"
 	"strconv"
 	"strings"
 	"time"
+	"ziyoubiancheng/mbook/common"
+	"ziyoubiancheng/mbook/models"
+	"ziyoubiancheng/mbook/utils/graphics"
+	"ziyoubiancheng/mbook/utils/store"
 
 	"github.com/astaxie/beego"
 )

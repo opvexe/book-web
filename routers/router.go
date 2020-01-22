@@ -1,16 +1,19 @@
 package routers
 
 import (
-	"sass-book-web/controllers"
+	"ziyoubiancheng/mbook/controllers"
 
 	"github.com/astaxie/beego"
 )
 
 func init() {
+	//test
+	//beego.Router("/initdata", &controllers.MainController{}, "get:InitData")
 
 	//首页&分类&详情
 	beego.Router("/", &controllers.HomeController{}, "get:Index")
-	beego.Router("/explore", &controllers.ExploreController{}, "*:Index")
+	beego.Router("/2", &controllers.HomeController{}, "get:Index2")
+	beego.Router("/explore/:cid", &controllers.ExploreController{}, "*:Index")
 	beego.Router("/books/:key", &controllers.DocumentController{}, "*:Index")
 
 	//读书
@@ -18,8 +21,8 @@ func init() {
 	beego.Router("/read/:key/search", &controllers.DocumentController{}, "post:Search")
 
 	//搜索
-	beego.Router("/search", &controllers.SearchController{}, "get:Search")
-	beego.Router("/search/result", &controllers.SearchController{}, "get:Result")
+	beego.Router("/search", &controllers.ElasticsearchController{}, "get:Search")
+	beego.Router("/search/result", &controllers.ElasticsearchController{}, "get:Result")
 
 	//login
 	beego.Router("/login", &controllers.AccountController{}, "*:Login")
@@ -45,13 +48,13 @@ func init() {
 	beego.Router("/book/setting/token", &controllers.BookController{}, "post:CreateToken")  //创建Token
 
 	//个人中心
-	beego.Router("/user/:username", &controllers.UserController{}, "get:Index")                 //分享
-	beego.Router("/user/:username/collection", &controllers.UserController{}, "get:Collection") //收藏
-	beego.Router("/user/:username/follow", &controllers.UserController{}, "get:Follow")         //关注
-	beego.Router("/user/:username/fans", &controllers.UserController{}, "get:Fans")             //粉丝
-	beego.Router("/follow/:uid", &controllers.BaseController{}, "get:SetFollow")                //关注或取消关注
-	beego.Router("/book/score/:id", &controllers.BookController{}, "*:Score")                   //评分
-	beego.Router("/book/comment/:id", &controllers.BookController{}, "post:Comment")            //评论
+	beego.Router("/user/:username", &controllers.CachedUserController{}, "get:Index")                 //分享
+	beego.Router("/user/:username/collection", &controllers.CachedUserController{}, "get:Collection") //收藏
+	beego.Router("/user/:username/follow", &controllers.CachedUserController{}, "get:Follow")         //关注
+	beego.Router("/user/:username/fans", &controllers.CachedUserController{}, "get:Fans")             //粉丝
+	beego.Router("/follow/:uid", &controllers.BaseController{}, "get:SetFollow")                      //关注或取消关注
+	beego.Router("/book/score/:id", &controllers.BookController{}, "*:Score")                         //评分
+	beego.Router("/book/comment/:id", &controllers.BookController{}, "post:Comment")                  //评论
 
 	//个人设置
 	beego.Router("/setting", &controllers.SettingController{}, "*:Index")

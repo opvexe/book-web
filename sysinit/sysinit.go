@@ -6,9 +6,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	conf "sass-book-web/common"
-	"sass-book-web/models"
-	"sass-book-web/utils"
+	conf "ziyoubiancheng/mbook/common"
+	"ziyoubiancheng/mbook/models"
+	"ziyoubiancheng/mbook/utils"
+	"ziyoubiancheng/mbook/utils/dynamicache"
+	"ziyoubiancheng/mbook/utils/pagecache"
+	"ziyoubiancheng/mbook/utils/store"
 
 	"github.com/astaxie/beego"
 )
@@ -23,6 +26,32 @@ func sysinit() {
 
 	//注册前端使用函数
 	registerFunctions()
+
+	//初始化pagecache
+	initPageCache()
+
+	//初始化动态缓存
+	initDynamicache()
+
+	//初始化OSS
+	initOss()
+}
+
+func initOss() {
+	store.InitOss()
+}
+
+func initDynamicache() {
+	dynamicache.MaxOpen = 128
+	dynamicache.MaxIdle = 128
+	dynamicache.ExpireSec = 10
+	dynamicache.InitCache()
+}
+
+func initPageCache() {
+	pagecache.BasePath = "./cache/staticpage"
+	pagecache.ExpireSec = 10
+	pagecache.InitCache()
 }
 
 func registerFunctions() {

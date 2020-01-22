@@ -4,11 +4,12 @@ import (
 	"compress/gzip"
 	"encoding/json"
 	"io"
-	"sass-book-web/common"
-	"sass-book-web/models"
-	"sass-book-web/utils"
 	"strings"
 	"time"
+	"ziyoubiancheng/mbook/common"
+	"ziyoubiancheng/mbook/models"
+	"ziyoubiancheng/mbook/utils"
+	"ziyoubiancheng/mbook/utils/pagecache"
 
 	"github.com/astaxie/beego"
 )
@@ -25,8 +26,30 @@ type CookieRemember struct {
 	Time     time.Time
 }
 
+func (c *BaseController) Finish() {
+	controllerName, actionName := c.GetControllerAndAction()
+
+	if pagecache.NeedWrite(controllerName, actionName, c.Ctx.Input.Params()) {
+		render, err := c.RenderString()
+		if nil == err && len(render) > 0 {
+			pagecache.Write(controllerName, actionName, &render, c.Ctx.Input.Params())
+		}
+	}
+}
+
 //每个子类Controller公用方法调用前，都执行一下Prepare方法
 func (c *BaseController) Prepare() {
+	//如果有缓存，则返回缓存内容
+	controllerName, actionName := c.GetControllerAndAction()
+	if pagecache.InCacheList(controllerName, actionName) {
+		contentPtr, err := pagecache.Read(controllerName, actionName, c.Ctx.Input.Params())
+		if nil == err && len(*contentPtr) > 0 {
+			io.WriteString(c.Ctx.ResponseWriter, *contentPtr)
+			beego.Debug(controllerName + "-" + actionName + "read cache")
+			c.StopRun()
+		}
+	}
+
 	c.Member = models.NewMember() //初始化
 	c.EnableAnonymous = false
 	//从session中获取用户信息

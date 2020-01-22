@@ -3,13 +3,35 @@ package models
 import (
 	"errors"
 	"regexp"
-	"sass-book-web/common"
-	"sass-book-web/utils"
 	"strings"
+	"time"
+	"ziyoubiancheng/mbook/common"
+	"ziyoubiancheng/mbook/utils"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 )
+
+type Member struct {
+	MemberId      int       `orm:"pk;auto" json:"member_id"`
+	Account       string    `orm:"size(30);unique" json:"account"`
+	Nickname      string    `orm:"size(30);unique" json:"nickname"`
+	Password      string    ` json:"-"`
+	Description   string    `orm:"size(640)" json:"description"`
+	Email         string    `orm:"size(100);unique" json:"email"`
+	Phone         string    `orm:"size(20);null;default(null)" json:"phone"`
+	Avatar        string    `json:"avatar"`
+	Role          int       `orm:"default(1)" json:"role"`
+	RoleName      string    `orm:"-" json:"role_name"`
+	Status        int       `orm:"default(0)" json:"status"`
+	CreateTime    time.Time `orm:"type(datetime);auto_now_add" json:"create_time"`
+	CreateAt      int       `json:"create_at"`
+	LastLoginTime time.Time `orm:"type(datetime);null" json:"last_login_time"`
+}
+
+func (m *Member) TableName() string {
+	return TNMembers()
+}
 
 func NewMember() *Member {
 	return &Member{}
@@ -29,7 +51,7 @@ func (m *Member) Add() error {
 
 	cond := orm.NewCondition().Or("email", m.Email).Or("nickname", m.Nickname).Or("account", m.Account)
 	var one Member
-	o := orm.NewOrm()
+	o := GetOrm("w")
 	if o.QueryTable(m.TableName()).SetCond(cond).One(&one, "member_id", "nickname", "account", "email"); one.MemberId > 0 {
 		if one.Nickname == m.Nickname {
 			return errors.New("昵称已存在")
@@ -62,7 +84,7 @@ func (m *Member) Update(cols ...string) error {
 	if m.Email == "" {
 		return errors.New("邮箱不能为空")
 	}
-	if _, err := orm.NewOrm().Update(m, cols...); err != nil {
+	if _, err := GetOrm("w").Update(m, cols...); err != nil {
 		return err
 	}
 	return nil
@@ -70,7 +92,7 @@ func (m *Member) Update(cols ...string) error {
 
 func (m *Member) Find(id int) (*Member, error) {
 	m.MemberId = id
-	if err := orm.NewOrm().Read(m); err != nil {
+	if err := GetOrm("s").Read(m); err != nil {
 		return m, err
 	}
 	m.RoleName = common.Role(m.Role)
@@ -80,7 +102,7 @@ func (m *Member) Find(id int) (*Member, error) {
 //登录
 func (m *Member) Login(account string, password string) (*Member, error) {
 	member := &Member{}
-	err := orm.NewOrm().QueryTable(m.TableName()).Filter("account", account).Filter("status", 0).One(member)
+	err := GetOrm("r").QueryTable(m.TableName()).Filter("account", account).Filter("status", 0).One(member)
 
 	if err != nil {
 		return member, errors.New("用户不存在")
@@ -105,14 +127,14 @@ func (m *Member) IsAdministrator() bool {
 //获取用户名
 func (m *Member) GetUsernameByUid(id interface{}) string {
 	var user Member
-	orm.NewOrm().QueryTable(TNMembers()).Filter("member_id", id).One(&user, "account")
+	GetOrm("r").QueryTable(TNMembers()).Filter("member_id", id).One(&user, "account")
 	return user.Account
 }
 
 //获取昵称
 func (m *Member) GetNicknameByUid(id interface{}) string {
 	var user Member
-	if err := orm.NewOrm().QueryTable(TNMembers()).Filter("member_id", id).One(&user, "nickname"); err != nil {
+	if err := GetOrm("s").QueryTable(TNMembers()).Filter("member_id", id).One(&user, "nickname"); err != nil {
 		beego.Error(err.Error())
 	}
 
@@ -121,6 +143,6 @@ func (m *Member) GetNicknameByUid(id interface{}) string {
 
 //根据用户名获取用户信息
 func (m *Member) GetByUsername(username string) (member Member, err error) {
-	err = orm.NewOrm().QueryTable(TNMembers()).Filter("account", username).One(&member)
+	err = GetOrm("r").QueryTable(TNMembers()).Filter("account", username).One(&member)
 	return
 }

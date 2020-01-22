@@ -1,17 +1,22 @@
 package common
 
 import (
-	"github.com/astaxie/beego"
 	"strings"
+
+	"github.com/astaxie/beego"
 )
 
-const (
-	SessionName      = "__mbook_session__"               //session
-	RegexpEmail      = `^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$` //正则表达式
-	PageSize         = 20
-	RollPage         = 4
-	WorkingDirectory = "./"
-)
+// session
+const SessionName = "__mbook_session__"
+
+//正则表达式
+const RegexpEmail = `^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$`
+
+// 默认PageSize
+const PageSize = 20
+const RollPage = 4
+
+const WorkingDirectory = "./"
 
 // 用户权限
 const (
@@ -60,6 +65,7 @@ func BookRole(role int) string {
 	default:
 		return ""
 	}
+
 }
 
 // app_key

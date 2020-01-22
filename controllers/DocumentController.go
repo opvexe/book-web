@@ -8,12 +8,13 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"sass-book-web/common"
-	"sass-book-web/models"
-	"sass-book-web/utils/store"
 	"strconv"
 	"strings"
 	"time"
+	"ziyoubiancheng/mbook/common"
+	"ziyoubiancheng/mbook/models"
+	"ziyoubiancheng/mbook/utils/dynamicache"
+	"ziyoubiancheng/mbook/utils/store"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/astaxie/beego"
@@ -71,27 +72,44 @@ func (c *DocumentController) Index() {
 	if identify == "" {
 		c.Abort("404")
 	}
-	tab := strings.ToLower(c.GetString("tab"))
 
 	bookResult := c.getBookData(identify, token)
 	if bookResult.BookId == 0 { //没有阅读权限
 		c.Redirect(beego.URLFor("HomeController.Index"), 302)
 		return
 	}
-
-	c.TplName = "document/intro.html"
 	c.Data["Book"] = bookResult
 
-	switch tab {
-	case "comment", "score":
-	default:
-		tab = "default"
-	}
+	c.TplName = "document/intro.html"
+	tab := strings.ToLower(c.GetString("tab", "default"))
 	c.Data["Tab"] = tab
-	c.Data["Menu"], _ = new(models.Document).GetMenuTop(bookResult.BookId)
-
-	c.Data["Comments"], _ = new(models.Comments).BookComments(1, 30, bookResult.BookId)
+	c.Data["Book"] = bookResult
+	//c.Data["Menu"], _ = new(models.Document).GetMenuTop(bookResult.BookId)
+	//c.Data["Comments"], _ = new(models.Comments).BookComments(1, 30, bookResult.BookId)
 	c.Data["MyScore"] = new(models.Score).BookScoreByUid(c.Member.MemberId, bookResult.BookId)
+
+	//动态缓存逻辑
+	cachekeyDocidx := "dynamcache_document_index_cdata:" + identify
+
+	//动态缓存c.Data["Menu"]
+	cachekeyDocidxMenu := cachekeyDocidx + "_menu"
+	var dataMenu []*models.Document
+	err := dynamicache.ReadStruct(cachekeyDocidxMenu, &dataMenu)
+	if nil != err {
+		dataMenu, _ = new(models.Document).GetMenuTop(bookResult.BookId)
+		dynamicache.WriteStruct(cachekeyDocidxMenu, dataMenu)
+	}
+	c.Data["Menu"] = dataMenu
+
+	//动态缓存c.Data["Comments"]
+	cachekeyDocidxComments := cachekeyDocidx + "_comments"
+	var dataComments []models.BookCommentsResult
+	err = dynamicache.ReadStruct(cachekeyDocidxComments, &dataComments)
+	if nil != err {
+		dataComments, _ = new(models.Comments).BookComments(1, 30, bookResult.BookId)
+		dynamicache.WriteStruct(cachekeyDocidxComments, dataComments)
+	}
+	c.Data["Comments"] = dataComments
 }
 
 //阅读器页面
@@ -121,14 +139,19 @@ func (c *DocumentController) Read() {
 	if doc.BookId != bookData.BookId {
 		c.Abort("404")
 	}
-
 	if doc.Release != "" {
 		query, err := goquery.NewDocumentFromReader(bytes.NewBufferString(doc.Release))
 		if err != nil {
 			beego.Error(err)
 		} else {
+			ossdomain := strings.TrimRight(beego.AppConfig.String("oss_attach_domain"), "/")
 			query.Find("img").Each(func(i int, contentSelection *goquery.Selection) {
-				if _, ok := contentSelection.Attr("src"); ok {
+				if src, ok := contentSelection.Attr("src"); ok {
+					if !(strings.HasPrefix(src, "https://") || strings.HasPrefix(src, "http://")) {
+						src = ossdomain + "/" + strings.TrimLeft(src, "./")
+						contentSelection.SetAttr("src", src)
+						beego.Debug(src)
+					}
 				}
 				if alt, _ := contentSelection.Attr("alt"); alt == "" {
 					contentSelection.SetAttr("alt", doc.DocumentName+" - 图"+fmt.Sprint(i+1))
@@ -249,7 +272,7 @@ func (c *DocumentController) Edit() {
 			docId = num
 		} else { //字符串
 			var doc = models.NewDocument()
-			orm.NewOrm().QueryTable(doc).Filter("identify", id).Filter("book_id", bookData.BookId).One(doc, "document_id")
+			models.GetOrm("w").QueryTable(doc).Filter("identify", id).Filter("book_id", bookData.BookId).One(doc, "document_id")
 			docId = doc.DocumentId
 		}
 	}
@@ -278,7 +301,7 @@ func (c *DocumentController) Create() {
 	parentId, _ := c.GetInt("parent_id", 0)
 	docId, _ := c.GetInt("doc_id", 0)
 	bookIdentify := strings.TrimSpace(c.GetString(":key"))
-	o := orm.NewOrm()
+	o := models.GetOrm("w")
 	if identify == "" {
 		c.JsonResult(1, "参数错误")
 	}
@@ -426,10 +449,14 @@ func (c *DocumentController) Upload() {
 	os.MkdirAll(path, os.ModePerm)
 
 	err = c.SaveToFile(name, filePath)
-
 	if err != nil {
 		c.JsonResult(1, "保存文件失败")
 	}
+	err = store.OssPutObject(strings.TrimPrefix(filePath, common.WorkingDirectory), filePath) //上传到oss
+	if err != nil {
+		c.JsonResult(1, "保存文件失败")
+	}
+
 	attachment := models.NewAttachment()
 	attachment.BookId = bookId
 	attachment.Name = moreFile.Filename
@@ -644,7 +671,7 @@ func (c *DocumentController) Search() {
 		return
 	}
 	bookData := c.getBookData(identify, token)
-	docs, _, err := models.NewDocumentSearch().SearchDocument(keyword, bookData.BookId, 1, 10000)
+	docs, _, err := models.NewDocumentSearch().SearchDocument(keyword, bookData.BookId, 1, 10000) //TODO 作业,改成用ES搜索
 	if err != nil {
 		beego.Error(err)
 		c.JsonResult(1, "搜索结果错误")

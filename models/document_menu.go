@@ -6,7 +6,6 @@ import (
 	"strconv"
 
 	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/orm"
 )
 
 //图书目录
@@ -19,7 +18,6 @@ type DocumentMenu struct {
 	Version      int64           `json:"version"`
 	State        *highlightState `json:"state,omitempty"` //如果字段为空，则json中不会有该字段
 }
-
 type highlightState struct {
 	Selected bool `json:"selected"`
 	Opened   bool `json:"opened"`
@@ -44,7 +42,7 @@ func (m *Document) GetMenu(bookId int, selectedId int, isEdit ...bool) ([]*Docum
 	trees := make([]*DocumentMenu, 0)
 	var docs []*Document
 
-	count, err := orm.NewOrm().QueryTable(m).Filter("book_id", bookId).OrderBy("order_sort", "identify").Limit(2000).All(&docs, "document_id", "document_name", "parent_id", "identify", "version")
+	count, err := GetOrm("r").QueryTable(m).Filter("book_id", bookId).OrderBy("order_sort", "identify").Limit(2000).All(&docs, "document_id", "document_name", "parent_id", "identify", "version")
 	if err != nil {
 		return trees, err
 	}

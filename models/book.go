@@ -2,13 +2,45 @@ package models
 
 import (
 	"fmt"
-	"sass-book-web/utils"
 	"strconv"
 	"strings"
+	"time"
+	"ziyoubiancheng/mbook/utils"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 )
+
+type Book struct {
+	BookId         int       `orm:"pk;auto" json:"book_id"`
+	BookName       string    `orm:"size(500)" json:"book_name"`       //名称
+	Identify       string    `orm:"size(100);unique" json:"identify"` //唯一标识
+	OrderIndex     int       `orm:"default(0)" json:"order_index"`
+	Description    string    `orm:"size(1000)" json:"description"`       //图书描述
+	Cover          string    `orm:"size(1000)" json:"cover"`             //封面地址
+	Editor         string    `orm:"size(50)" json:"editor"`              //编辑器类型: "markdown"
+	Status         int       `orm:"default(0)" json:"status"`            //状态:0 正常 ; 1 已删除
+	PrivatelyOwned int       `orm:"default(0)" json:"privately_owned"`   // 是否私有: 0 公开 ; 1 私有
+	PrivateToken   string    `orm:"size(500);null" json:"private_token"` // 私有图书访问Token
+	MemberId       int       `orm:"size(100)" json:"member_id"`
+	CreateTime     time.Time `orm:"type(datetime);auto_now_add" json:"create_time"` //创建时间
+	ModifyTime     time.Time `orm:"type(datetime);auto_now_add" json:"modify_time"`
+	ReleaseTime    time.Time `orm:"type(datetime);" json:"release_time"` //发布时间
+	DocCount       int       `json:"doc_count"`                          //文档数量
+	CommentCount   int       `orm:"type(int)" json:"comment_count"`
+	Vcnt           int       `orm:"default(0)" json:"vcnt"`              //阅读次数
+	Collection     int       `orm:"column(star);default(0)" json:"star"` //收藏次数
+	Score          int       `orm:"default(40)" json:"score"`            //评分
+	CntScore       int       //评分人数
+	CntComment     int       //评论人数
+	Author         string    `orm:"size(50)"`                      //来源
+	AuthorURL      string    `orm:"column(author_url);size(1000)"` //来源链接
+}
+
+//orm 回调
+func (m *Book) TableName() string {
+	return TNBook()
+}
 
 func NewBook() *Book {
 	return &Book{}
@@ -26,7 +58,7 @@ func (m *Book) HomeData(pageIndex, pageSize int, cid int, fields ...string) (boo
 	sqlCount := fmt.Sprintf(sqlFmt, "count(*) cnt")
 	fmt.Println(sql)
 	fmt.Println(sqlCount)
-	o := orm.NewOrm()
+	o := GetOrm("r")
 	var params []orm.Params
 	if _, err := o.Raw(sqlCount).Values(&params); err == nil {
 		if len(params) > 0 {
@@ -45,7 +77,7 @@ func (m *Book) SearchBook(wd string, page, size int) (books []Book, cnt int, err
 
 	wd = "%" + wd + "%"
 
-	o := orm.NewOrm()
+	o := GetOrm("r")
 	var count struct{ Cnt int }
 	err = o.Raw(sqlCount, wd, wd).QueryRow(&count)
 	if count.Cnt > 0 {
@@ -68,7 +100,7 @@ func (m *Book) GetBooksByIds(ids []int, fields ...string) (books []Book, err err
 		idArr = append(idArr, i)
 	}
 
-	rows, err := orm.NewOrm().QueryTable(TNBook()).Filter("book_id__in", idArr).All(&bs, fields...)
+	rows, err := GetOrm("r").QueryTable(TNBook()).Filter("book_id__in", idArr).All(&bs, fields...)
 	if rows > 0 {
 		bookMap := make(map[interface{}]Book)
 		for _, book := range bs {
@@ -86,7 +118,7 @@ func (m *Book) GetBooksByIds(ids []int, fields ...string) (books []Book, err err
 
 //Insert
 func (m *Book) Insert() (err error) {
-	if _, err = orm.NewOrm().Insert(m); err != nil {
+	if _, err = GetOrm("w").Insert(m); err != nil {
 		return
 	}
 
@@ -108,7 +140,7 @@ func (m *Book) Insert() (err error) {
 func (m *Book) Update(cols ...string) (err error) {
 	bk := NewBook()
 	bk.BookId = m.BookId
-	o := orm.NewOrm()
+	o := GetOrm("w")
 	if err = o.Read(bk); err != nil {
 		return err
 	}
@@ -117,16 +149,17 @@ func (m *Book) Update(cols ...string) (err error) {
 }
 
 func (m *Book) Select(field string, value interface{}, cols ...string) (book *Book, err error) {
+	o := GetOrm("r")
 	if len(cols) == 0 {
-		err = orm.NewOrm().QueryTable(m.TableName()).Filter(field, value).One(m)
+		err = o.QueryTable(m.TableName()).Filter(field, value).One(m)
 	} else {
-		err = orm.NewOrm().QueryTable(m.TableName()).Filter(field, value).One(m, cols...)
+		err = o.QueryTable(m.TableName()).Filter(field, value).One(m, cols...)
 	}
 	return m, err
 }
 
 func (m *Book) SelectPage(pageIndex, pageSize, memberId int, PrivatelyOwned int) (books []*BookData, totalCount int, err error) {
-	o := orm.NewOrm()
+	o := GetOrm("r")
 	sql1 := "select count(b.book_id) as total_count from " + TNBook() + " as b left join " +
 		TNRelationship() + " as r on b.book_id=r.book_id and r.member_id = ? where r.relationship_id > 0  and b.privately_owned=" + strconv.Itoa(PrivatelyOwned)
 
@@ -182,7 +215,7 @@ func (book *Book) ToBookData() (m *BookData) {
 
 //更新文档数量
 func (m *Book) RefreshDocumentCount(bookId int) {
-	o := orm.NewOrm()
+	o := GetOrm("w")
 	docCount, err := o.QueryTable(TNDocuments()).Filter("book_id", bookId).Count()
 	if err == nil {
 		temp := NewBook()

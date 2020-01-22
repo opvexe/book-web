@@ -2,13 +2,29 @@ package models
 
 import (
 	"strconv"
-
-	"github.com/astaxie/beego/orm"
 )
+
+//图书分类对应关系
+type BookCategory struct {
+	Id         int //自增主键
+	BookId     int //书籍id
+	CategoryId int //分类id
+}
+
+func (m *BookCategory) TableName() string {
+	return TNBookCategory()
+}
+
+// 多字段唯一键
+func (m *BookCategory) TableUnique() [][]string {
+	return [][]string{
+		[]string{"BookId", "CategoryId"},
+	}
+}
 
 //根据书籍id查询分类id
 func (m *BookCategory) SelectByBookId(book_id int) (cates []Category, rows int64, err error) {
-	o := orm.NewOrm()
+	o := GetOrm("r")
 	sql := "select c.* from " + TNCategory() + " c left join " + TNBookCategory() + " bc on c.id=bc.category_id where bc.book_id=?"
 	rows, err = o.Raw(sql, book_id).QueryRows(&cates)
 	return
@@ -26,7 +42,7 @@ func (m *BookCategory) SetBookCates(bookId int, cids []string) {
 		tableBookCategory = TNBookCategory()
 	)
 
-	o := orm.NewOrm()
+	o := GetOrm("w")
 	o.QueryTable(tableCategory).Filter("id__in", cids).All(&cates, "id", "pid")
 
 	cidMap := make(map[string]bool)

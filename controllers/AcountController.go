@@ -3,15 +3,17 @@ package controllers
 import (
 	"errors"
 	"fmt"
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/cache"
-	"github.com/astaxie/beego/utils/captcha"
 	"regexp"
+	"strings"
+	"time"
+
 	"sass-book-web/common"
 	"sass-book-web/models"
 	"sass-book-web/utils"
-	"strings"
-	"time"
+
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/cache"
+	"github.com/astaxie/beego/utils/captcha"
 )
 
 type AccountController struct {
@@ -21,6 +23,7 @@ type AccountController struct {
 var cpt *captcha.Captcha
 
 func init() {
+	// use beego cache system store the captcha data
 	fc := &cache.FileCache{CachePath: "./cache/captcha"}
 	cpt = captcha.NewWithFilter("/captcha/", fc)
 }

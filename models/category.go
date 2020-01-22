@@ -7,8 +7,23 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
+type Category struct {
+	Id     int
+	Pid    int    //分类id
+	Title  string `orm:"size(30);unique"`
+	Intro  string //介绍
+	Icon   string
+	Cnt    int  //统计分类下图书
+	Sort   int  //排序
+	Status bool //状态，true 显示
+}
+
+func (m *Category) TableName() string {
+	return TNCategory()
+}
+
 func (m *Category) GetCates(pid int, status int) (cates []Category, err error) {
-	qs := orm.NewOrm().QueryTable(TNCategory())
+	qs := GetOrm("r").QueryTable(TNCategory())
 	if pid > -1 {
 		qs = qs.Filter("pid", pid)
 	}
@@ -23,7 +38,7 @@ func (m *Category) GetCates(pid int, status int) (cates []Category, err error) {
 //查询分类
 func (m *Category) Find(id int) (cate Category) {
 	cate.Id = id
-	orm.NewOrm().Read(&cate)
+	GetOrm("r").Read(&cate)
 	return cate
 }
 
@@ -34,7 +49,7 @@ func (m *Category) InsertMulti(pid int, cates string) (err error) {
 		return
 	}
 
-	o := orm.NewOrm()
+	o := GetOrm("w")
 	for _, item := range slice {
 		if item = strings.TrimSpace(item); item != "" {
 			var cate = Category{
@@ -54,7 +69,7 @@ func (m *Category) InsertMulti(pid int, cates string) (err error) {
 func (m *Category) Delete(id int) (err error) {
 	var cate = Category{Id: id}
 
-	o := orm.NewOrm()
+	o := GetOrm("w")
 	if err = o.Read(&cate); cate.Cnt > 0 { //当前分类下文档图书数量不为0，不允许删除
 		return errors.New("删除失败，当前分类下的问下图书不为0，不允许删除")
 	}
@@ -72,7 +87,7 @@ func (m *Category) Delete(id int) (err error) {
 
 //更新分类字段
 func (m *Category) UpdateField(id int, field, val string) (err error) {
-	_, err = orm.NewOrm().QueryTable(TNCategory()).Filter("id", id).Update(orm.Params{field: val})
+	_, err = GetOrm("w").QueryTable(TNCategory()).Filter("id", id).Update(orm.Params{field: val})
 	return
 }
 
@@ -95,7 +110,7 @@ func CountCategory() {
 
 	var count []Count
 
-	o := orm.NewOrm()
+	o := GetOrm("w")
 	sql := "select count(bc.id) cnt, bc.category_id from " + TNBookCategory() + " bc left join " + TNBook() + " b on b.book_id=bc.book_id where b.privately_owned=0 group by bc.category_id"
 	o.Raw(sql).QueryRows(&count)
 	if len(count) == 0 {

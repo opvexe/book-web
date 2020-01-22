@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"sass-book-web/models"
+	"ziyoubiancheng/mbook/models"
 
 	"github.com/astaxie/beego"
 )
@@ -17,5 +17,9 @@ func (c *HomeController) Index() {
 		beego.Error(err.Error())
 	}
 
+	c.TplName = "home/list.html"
+}
+
+func (c *HomeController) Index2() {
 	c.TplName = "home/list.html"
 }
