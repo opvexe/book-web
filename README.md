@@ -17,3 +17,17 @@ $ bee new ibook
 多对多：对应关系单独表 [一个用户多个粉丝，一个粉丝有多个用户]
 ```
 
+#### 1.3 elasticsearch安装与使用
+
+```shell
+$ brew install elasticsearch@5.6
+$ brew services start elasticsearch@5.6
+# 访问http://localhost:9200
+```
+
+#### 1.4 mysql 主从搭配
+
+```shell
+
+```
+
