@@ -137,17 +137,29 @@ func (this *ElasticSearchClient) get(api string) (req *httplib.BeegoHTTPRequest)
 "query":{
 "bool":{
 "should":{
-{"match":{"book_name":"Go"}},
-{"match":{"description":"ios"}}
-}
-}
-}
+	{"match":{"book_name":"Go"}},
+	{"match":{"description":"ios"}}
+			}
+		}
+	}
 }
 ```
 
 #### 1.4 mysql 主从搭配
 
 ```shell
+docker pull mysql:5.7
+Master(主)：
+docker run -p 3339:3306 --name mysql-master -e MYSQL_ROOT_PASSWORD=135246 -d mysql:5.7
+Slave(从)：
+docker run -p 3340:3306 --name mysql-slave -e MYSQL_ROOT_PASSWORD=135246 -d mysql:5.7
+# 进入主容器
+docker exec -it mysql-master /bin/bash
+mysql -uroot -p135246
 
+CREATE USER 'user_w'@'％' IDENTIFIED BY '135246';
+GRANT ALL PRIVILEGES ON * .* TO 'user_w'@'％';
+容器内部设置解决报错问题
+ALTER USER 'user_w'@'%' IDENTIFIED WITH mysql_native_password BY '135246';
 ```
 
